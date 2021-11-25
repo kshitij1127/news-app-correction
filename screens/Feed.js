@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Card from "@mui/material/Card";
@@ -11,32 +11,58 @@ export default class Feed extends React.Component {
     super(props);
     this.state = {
       news: [],
+      url: [],
     };
   }
   getNews = () => {
-    const api =
-      "https://newsapi.org/v2/everything?q=everything&from=2021-11-23&sortBy=popularity&apiKey=4482bf8b34b2410eaceaa7fe6f3c3a93";
+    // const api =
+    //   "https://newsapi.org/v2/everything?q=everything&from=2021-11-23&sortBy=popularity&apiKey=4482bf8b34b2410eaceaa7fe6f3c3a93";
+    const api = 'https://api.nytimes.com/svc/topstories/v2/world.json?api-key=3Z5IANaP2pCJ4ABFRvnw0Q6uHdBJThBI'
     axios.get(api).then((res) => {
-      for (let i = 0; i < res.data.articles.length; i++) {
-        console.log(res.data.articles[i].title);
+      for (let i = 0; i < res.data.results.length; i++) {
+        console.log(res.data.results[i].title);
+        // let news = [...this.state.news, res.data.articles[i].title];
         this.setState({
-          news: res.data.articles[i].title,
+          news: [...this.state.news, res.data.results[i].title],
+          url: [res.data.results[i].url],
         });
       }
     });
   };
 
+  componentDidMount() {
+    this.getNews();
+  }
+
+  fetchUrl = async(url) => {
+    var dataurl = fetch(url);
+    <Button onClick={
+      () => {
+        this.state.url
+      }
+    }></Button>
+  }
+
   displayNews = () => {
+    console.log(this.state.url)
     return (
       <View>
-        <Text>{this.state.news}</Text>
+        {this.state.news.map((news) => {
+          return (
+            <TouchableOpacity onPress={() => {this.state.url}}>
+            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, }}>
+              {news}
+            </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     );
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Button
           variant="text"
           onClick={() => {
@@ -47,30 +73,17 @@ export default class Feed extends React.Component {
         </Button>
 
         <View>
-          <Card>
+          <Card style={{backgroundColor: 'pink'}}>
             <CardContent>
               <Typography color="text.primary" sx={{ fontSize: 56 }}>
                 Headlines
-              </Typography>
-              <Typography color="text.primary" sx={{ fontSize: 20 }}>
-                {this.getNews()}
               </Typography>
             </CardContent>
           </Card>
         </View>
 
         <View>
-          {this.state.news.map((news) => (
-          <Card>
-            <CardContent>
-              <Typography color="text.primary" sx={{ fontSize: 20, color: "black" }}>
-                {/* {this.displayNews()} */}
-                {news}
-                {console.log(news)}
-              </Typography>
-            </CardContent>
-          </Card>
-          ))}
+          {this.displayNews()}
         </View>
         
       </View>
