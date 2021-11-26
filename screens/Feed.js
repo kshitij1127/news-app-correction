@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Linking } from "react-native";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Link } from "@react-navigation/native";
 
 export default class Feed extends React.Component {
   constructor(props) {
@@ -34,14 +35,14 @@ export default class Feed extends React.Component {
     this.getNews();
   }
 
-  fetchUrl = async(url) => {
-    var dataurl = fetch(url);
-    <Button onClick={
-      () => {
-        this.state.url
-      }
-    }></Button>
-  }
+  // fetchUrl = async(url) => {
+  //   var dataurl = fetch(url);
+  //   <Button onClick={
+  //     () => {
+  //       this.state.url
+  //     }
+  //   }></Button>
+  // }
 
   displayNews = () => {
     console.log(this.state.url)
@@ -49,9 +50,9 @@ export default class Feed extends React.Component {
       <View>
         {this.state.news.map((news) => {
           return (
-            <TouchableOpacity onPress={() => {this.state.url}}>
-            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, }}>
-              {news}
+            <TouchableOpacity onPress={() => {Linking.openURL(this.state.url)}} style={{backgroundColor: 'cyan'}}>
+            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, fontWeight: 'bold', marginLeft: 100}}>
+             • {news}
             </Text>
             </TouchableOpacity>
           );
@@ -63,17 +64,8 @@ export default class Feed extends React.Component {
   render() {
     return (
       <View>
-        <Button
-          variant="text"
-          onClick={() => {
-            this.props.navigation.navigate("Welcome");
-          }}
-        >
-          Go Back
-        </Button>
-
         <View>
-          <Card style={{backgroundColor: 'pink'}}>
+          <Card style={{backgroundColor: 'coral'}}>
             <CardContent>
               <Typography color="text.primary" sx={{ fontSize: 56 }}>
                 Headlines

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View, Linking } from 'react-native'
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -12,9 +12,10 @@ export default class About extends React.Component{
       <View>
         <Card>
           <CardContent>
-             <Typography sx={{ fontSize: 16 }} paragraph>this is a news app. this app was created using bing news api and react native.</Typography>
+             <Typography sx={{ fontSize: 16 }} paragraph>This is a news app. this app was created using New York Times api and react native.</Typography>
+             <Typography sx={{ fontSize: 16 }} paragraph>note, you have to create an account for The New York Times to be able to view the articles</Typography>
+             <TouchableOpacity onPress={() => {Linking.openURL('https://www.nytimes.com/')}}>Sign up here</TouchableOpacity>
           </CardContent>
-          <Button onClick={() => {this.props.navigation.navigate('Welcome')}}>go back</Button>
         </Card>
       </View>
     )
