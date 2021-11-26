@@ -27,6 +27,7 @@ export default class Feed extends React.Component {
           news: [...this.state.news, res.data.results[i].title],
           url: [res.data.results[i].url],
         });
+        console.log(this.state.url)
       }
     });
   };
