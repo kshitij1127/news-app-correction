@@ -13,7 +13,7 @@ export default class About extends React.Component{
         <Card>
           <CardContent>
              <Typography sx={{ fontSize: 16 }} paragraph>This is a news app. this app was created using New York Times api and react native.</Typography>
-             <Typography sx={{ fontSize: 16 }} paragraph>note, you have to create an account for The New York Times to be able to view the articles</Typography>
+             <Typography sx={{ fontSize: 16 }} paragraph>Only the abstract of the articles is given below, to read full articles, sign up for The New York Times</Typography>
              <TouchableOpacity onPress={() => {Linking.openURL('https://www.nytimes.com/')}}>Sign up here</TouchableOpacity>
           </CardContent>
         </Card>

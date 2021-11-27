@@ -12,12 +12,11 @@ export default class Feed extends React.Component {
     super(props);
     this.state = {
       news: [],
+      description: [],
       url: [],
     };
   }
   getNews = () => {
-    // const api =
-    //   "https://newsapi.org/v2/everything?q=everything&from=2021-11-23&sortBy=popularity&apiKey=4482bf8b34b2410eaceaa7fe6f3c3a93";
     const api = 'https://api.nytimes.com/svc/topstories/v2/world.json?api-key=3Z5IANaP2pCJ4ABFRvnw0Q6uHdBJThBI'
     axios.get(api).then((res) => {
       for (let i = 0; i < res.data.results.length; i++) {
@@ -25,9 +24,9 @@ export default class Feed extends React.Component {
         // let news = [...this.state.news, res.data.articles[i].title];
         this.setState({
           news: [...this.state.news, res.data.results[i].title],
-          url: [res.data.results[i].url],
+          description: [...this.state.description, res.data.results[i].abstract],
+          url: [...this.state.url, res.data.results[i].url],
         });
-        console.log(this.state.url)
       }
     });
   };
@@ -36,26 +35,23 @@ export default class Feed extends React.Component {
     this.getNews();
   }
 
-  // fetchUrl = async(url) => {
-  //   var dataurl = fetch(url);
-  //   <Button onClick={
-  //     () => {
-  //       this.state.url
-  //     }
-  //   }></Button>
-  // }
-
   displayNews = () => {
-    console.log(this.state.url)
     return (
       <View>
-        {this.state.news.map((news) => {
+        {this.state.news.map((news, id) => {
           return (
-            <TouchableOpacity onPress={() => {Linking.openURL(this.state.url)}} style={{backgroundColor: 'cyan'}}>
-            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, fontWeight: 'bold', marginLeft: 100}}>
+            <View>
+            
+              <TouchableOpacity onPress={() => {Linking.openURL(this.state.url[id])}} style={{marginLeft: 20, marginTop: 100,}}>
+            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, fontWeight: 'bold', marginLeft: 100, alignContent: 'center'}}>
              • {news}
             </Text>
             </TouchableOpacity>
+            
+            <Text key={news} style={{marginTop: 20, alignItems: 'center', fontFamily: 'Roboto', fontSize: 30, fontWeight: 'bold', marginLeft: 120, alignContent: 'center'}}>
+              - {this.state.description[id]}
+            </Text>
+            </View>
           );
         })}
       </View>
