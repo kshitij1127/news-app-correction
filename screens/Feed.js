@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Linking } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ImageBackground } from "react-native";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Card from "@mui/material/Card";
@@ -40,17 +40,18 @@ export default class Feed extends React.Component {
       <View>
         {this.state.news.map((news, id) => {
           return (
-            <View style={{backgroundColor: 'yellow'}}>
+            <View style={{backgroundColor: ''}}>
+              <ImageBackground source={require('../assets/bg.jpg')}>
               <TouchableOpacity onPress={() => {Linking.openURL(this.state.url[id])}} style={{marginLeft: 20, marginTop: 100,}}>
-            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Roboto', fontSize: 40, fontWeight: 'bold', marginLeft: 100, alignContent: 'center'}}>
+            <Text key={news} style={{marginTop: 100, alignItems: 'center', fontFamily: 'Product Sans', fontSize: 40, fontWeight: 'bold', marginLeft: 100, alignContent: 'center', color: 'yellow'}}>
              • {news}
             </Text>
             </TouchableOpacity>
       
-            <Text key={news} style={{marginTop: 20, alignItems: 'center', fontFamily: 'Roboto', fontSize: 30, fontStyle: 'italic', marginLeft: 120, alignContent: 'center', borderBottomColor: 'black', borderBottomWidth: 3, borderBottomEndRadius: 25, borderBottomRightRadius: 25, marginRight: 100,}}>
+            <Text key={news} style={{marginTop: 20, alignItems: 'center', fontFamily: 'Roboto', fontSize: 30, fontStyle: 'italic', marginLeft: 120, alignContent: 'center', borderBottomColor: 'black', borderBottomWidth: 3, borderBottomEndRadius: 25, borderBottomRightRadius: 25, marginRight: 100, color: 'white'}}>
               - {this.state.description[id]}
             </Text>
-            
+            </ImageBackground>
             </View>
           );
         })}
